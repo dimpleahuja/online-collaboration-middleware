@@ -22,7 +22,7 @@ import com.niit.model.ProfilePicture;
 public class ProfilePictureController {
 	@Autowired
 	private ProfilePictureDao profilePictureDao;
-	@RequestMapping(value="/uploadprofilepic",method=RequestMethod.POST)
+	@RequestMapping(value="/uploadprofilepic",method=RequestMethod.GET)
 	public ResponseEntity<?> uploadProfilePicture(@RequestParam CommonsMultipartFile image,HttpSession session){
 		//<input type="file" name="image" >
 	String email=(String)session.getAttribute("loginId");
@@ -47,7 +47,7 @@ public class ProfilePictureController {
 	// blogdetails.html -> postedBy smith.j@abc.com
 	// <img src="http://......./getimage/jhon.smith@xyz.com">
 	// friend  <img src="http://......./getimage/jhon.smith@xyz.com">
-	@RequestMapping(value="/getimage/{email:.+}",method=RequestMethod.GET)
+	@RequestMapping(value="/{email:.+}",method=RequestMethod.GET)
 	public @ResponseBody byte[] getImage(@PathVariable String email,HttpSession session){
 		System.out.println(email);
 		String auth=(String)session.getAttribute("loginId");

@@ -24,7 +24,7 @@ public class FriendController {
 	private FriendDao friendDao;
 	@Autowired
 	private UserDao userDao;
-	@RequestMapping(value="/suggestedusers",method=RequestMethod.GET)
+	@RequestMapping(value="/suggesteduser",method=RequestMethod.GET)
 public ResponseEntity<?> suggestedUsers(HttpSession session){
 	String email=(String)session.getAttribute("loginId");
 	if(email==null){//Not loggedin
@@ -51,17 +51,7 @@ public ResponseEntity<?> suggestedUsers(HttpSession session){
 		return new ResponseEntity<Void>(HttpStatus.OK);
 		
 	}
-	@RequestMapping(value="/pendingrequests",method=RequestMethod.GET)
-	public ResponseEntity<?> pendingRequests(HttpSession session){
-		String email=(String)session.getAttribute("loginId");
-		if(email==null){//Not loggedin
-			ErrorClazz error=new ErrorClazz(5,"Unauthorized access...");
-			return new ResponseEntity<ErrorClazz>(error,HttpStatus.UNAUTHORIZED);
-		}
-		//List of friends object , in frontend we are going to display only fromId
-		List<Friend> pendingRequests=friendDao.pendingRequests(email);
-		return new ResponseEntity<List<Friend>>(pendingRequests,HttpStatus.OK);
-	}
+
 	@RequestMapping(value="/acceptrequest",method=RequestMethod.PUT)
 	public ResponseEntity<?> acceptRequest(@RequestBody Friend request,HttpSession session){
 		String email=(String)session.getAttribute("loginId");
